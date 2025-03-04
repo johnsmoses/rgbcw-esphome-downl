@@ -29,7 +29,7 @@ ota:
   platform: esphome
 
 dashboard_import:
-  package_import_url: github://esphome/esphome-project-template/project-template-esp32.yaml@v6
+  package_import_url: github://johnsmoses/rgbcw-esphome-downl/refs/heads/main/downlrgbcw.yaml
   import_full_config: false
 
 wifi:
