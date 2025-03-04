@@ -1,0 +1,76 @@
+substitutions:
+  name: "esphome-rgbcw-dl"
+  friendly_name: "ESPHome RGBCW Downlight"
+
+esphome:
+  name: "${name}"
+  # Friendly names are used where appropriate in Home Assistant
+  friendly_name: "${friendly_name}"
+  # Automatically add the mac address to the name
+  # so you can use a single firmware for all devices
+  name_add_mac_suffix: true
+
+  # This will allow for (future) project identification,
+  # configuration and updates.
+  project:
+    name: jmiot.rgbcw-downlight
+    version: "1.0"
+
+bk72xx:
+  board: cbu
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+  platform: esphome
+
+dashboard_import:
+  package_import_url: github://esphome/esphome-project-template/project-template-esp32.yaml@v6
+  import_full_config: false
+
+wifi:
+  # Set up a wifi access point
+  ap:
+    password: "hadownlight"
+
+captive_portal:
+    
+text_sensor:
+  - platform: libretiny
+    version:
+      name: LibreTiny Version
+
+output:
+  - platform: libretiny_pwm
+    id: output_red
+    pin: P8
+  - platform: libretiny_pwm
+    id: output_green
+    pin: P24
+  - platform: libretiny_pwm
+    id: output_blue
+    pin: P7
+  - platform: libretiny_pwm
+    id: output_cold
+    pin: P26
+  - platform: libretiny_pwm
+    id: output_warm
+    pin: P6
+
+light:
+  - platform: rgbww
+    id: light_rgbww
+    name: Light
+    color_interlock: true
+    cold_white_color_temperature: 6500 K
+    warm_white_color_temperature: 2700 K
+    red: output_red
+    green: output_green
+    blue: output_blue
+    cold_white: output_cold
+    warm_white: output_warm
+    restore_mode: ALWAYS_OFF   # If power is restored (switch?) then turn the light on.
